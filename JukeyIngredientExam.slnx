@@ -3,5 +3,5 @@
     <Platform Name="x64" />
     <Platform Name="x86" />
   </Configurations>
-  <Project Path="JukeyIngredientExam.vcxproj" />
+  <Project Path="JukeyIngredientExam.vcxproj" Id="f15ff3cf-4fed-402a-b848-6e54e4c38d17" />
 </Solution>

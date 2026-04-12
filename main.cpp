@@ -1,24 +1,18 @@
 #include <fstream>
 #include <iostream>
-#include <sstream>
 #include <vector>
 
 #include "Ingredient.h"
 
 namespace
 {
-	std::vector<std::string> splitLine(const std::string& line, const char delimiter)
+	std::string trim(const std::string& s)
 	{
-		std::vector<std::string> tokens;
-		std::string token;
-		std::stringstream ss(line);
+		const size_t start = s.find_first_not_of(' ');
+		if (start == std::string::npos) return "";
 
-		while (std::getline(ss, token, delimiter))
-		{
-			tokens.push_back(token);
-		}
-
-		return tokens;
+		const size_t end = s.find_last_not_of(' ');
+		return s.substr(start, end - start + 1);
 	}
 
 	std::vector<Ingredient> readFile(const std::string& filename)
@@ -35,15 +29,13 @@ namespace
 		std::string line;
 		while (std::getline(file, line))
 		{
-			auto tokens = splitLine(line, ',');
-
 			Ingredient ingredient(
-				tokens[0],
-				tokens[1],
-				std::stod(tokens[2]),
-				std::stod(tokens[3]),
-				std::stod(tokens[4]),
-				tokens[5]
+				trim(line.substr(0, 17)),
+				trim(line.substr(17, 14)),
+				std::stod(trim(line.substr(31, 10))),
+				std::stod(trim(line.substr(41, 10))),
+				std::stod(trim(line.substr(51, 8))),
+				trim(line.substr(59, line.length() - 59))
 			);
 
 			ingredients.push_back(ingredient);
@@ -116,7 +108,7 @@ int main()
 		std::cout << "1. Search by Category\n";
 		std::cout << "2. List Ingredients Below Reorder Point\n";
 		std::cout << "3. Exit Program\n";
-		std::cout << "Please enter your choice (1-3):\n";
+		std::cout << "Please enter your choice (1-3): ";
 
 		std::string choice;
 		std::cin >> choice;
@@ -124,7 +116,7 @@ int main()
 		switch (choice[0])
 		{
 		case '1':
-			std::cout << "Enter a category to search:\n";
+			std::cout << "Enter a category to search: ";
 			std::cin.ignore();
 			std::getline(std::cin, category);
 			searchByCategory(ingredients, category);
