@@ -6,15 +6,6 @@
 
 namespace
 {
-	std::string trim(const std::string& s)
-	{
-		const size_t start = s.find_first_not_of(' ');
-		if (start == std::string::npos) return "";
-
-		const size_t end = s.find_last_not_of(' ');
-		return s.substr(start, end - start + 1);
-	}
-
 	std::vector<Ingredient> readFile(const std::string& filename)
 	{
 		std::ifstream file(filename);
@@ -24,21 +15,18 @@ namespace
 			throw std::runtime_error("Could not open file: " + filename);
 		}
 
+		std::string ingredient;
+		std::string category;
+		int qty;
+		double pricePerLb;
+		int reorderPoint;
+		std::string supplier;
+
 		std::vector<Ingredient> ingredients;
 
-		std::string line;
-		while (std::getline(file, line))
+		while (file >> ingredient >> category >> qty >> pricePerLb >> reorderPoint >> supplier)
 		{
-			Ingredient ingredient(
-				trim(line.substr(0, 17)),
-				trim(line.substr(17, 14)),
-				std::stod(trim(line.substr(31, 10))),
-				std::stod(trim(line.substr(41, 10))),
-				std::stod(trim(line.substr(51, 8))),
-				trim(line.substr(59, line.length() - 59))
-			);
-
-			ingredients.push_back(ingredient);
+			ingredients.push_back(Ingredient(ingredient, category, qty, pricePerLb, reorderPoint, supplier));
 		}
 
 		file.close();
@@ -91,7 +79,7 @@ int main()
 
 	try
 	{
-		ingredients = readFile("ingredients.csv");
+		ingredients = readFile("ingredients.txt");
 	}
 	catch (const std::runtime_error& ex)
 	{
@@ -117,8 +105,7 @@ int main()
 		{
 		case '1':
 			std::cout << "Enter a category to search: ";
-			std::cin.ignore();
-			std::getline(std::cin, category);
+			std::cin >> category;
 			searchByCategory(ingredients, category);
 			break;
 
