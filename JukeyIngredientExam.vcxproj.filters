@@ -21,9 +21,15 @@
     <ClCompile Include="Ingredient.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="JukeyException.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Ingredient.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="JukeyException.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

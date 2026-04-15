@@ -3,6 +3,7 @@
 #include <vector>
 
 #include "Ingredient.h"
+#include "JukeyException.h"
 
 namespace
 {
