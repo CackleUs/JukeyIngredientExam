@@ -77,7 +77,7 @@ namespace
 int main()
 {
 	std::vector<Ingredient> ingredients;
-	asdasdsaasd
+	
 	try
 	{
 		ingredients = readFile("ingredients.txt");
